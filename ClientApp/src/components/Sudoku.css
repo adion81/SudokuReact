@@ -1,0 +1,42 @@
+h1{
+    font-size: 500%;
+    text-align: center;
+}
+.main{
+    margin-top: 4%;
+    display: grid;
+    grid-template-columns: 20% 60% 20%;
+    grid-template-rows: 30% 40% 30%;
+}
+.timer{
+    text-align: center;
+    grid-column: 1;
+    grid-row: 1;
+    display: grid;
+    grid-template-columns: 20% 60% 20%;
+    grid-template-rows: 10% 40% 40% 10%
+}
+.counter{
+    grid-column: 2;
+    grid-row: 2;
+    font-size: 300%;
+}
+.timer button{
+    grid-column: 2;
+    grid-row: 3;
+    width: 50%;
+    margin: 0 auto;
+}
+table{
+    grid-column: 2;
+    border: 3px solid black;
+    width: 500px;
+    margin: 0 auto;
+}
+td{
+    border: 2px solid black;
+    width: 55px;
+    height: 55px;
+    font-size: 200%;
+    text-align: center;
+}
