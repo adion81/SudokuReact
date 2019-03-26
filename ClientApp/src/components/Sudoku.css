@@ -51,3 +51,9 @@ td{
     font-size: 150%;
     cursor: pointer;
 }
+.square{
+    cursor: pointer;
+}
+.selected{
+    background-color: yellow;
+}

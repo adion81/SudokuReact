@@ -1,24 +1,26 @@
 import React, { Component } from 'react';
+import NumberSquare from './NumberSquare';
 
-export class NumberSelect extends Component {
+export default class NumberSelect extends Component {
+    createNumbers = () => {
+        return this.props.numbers.map(function (row) {
+            return <NumberSquare
+                id={row.id}
+                value={row.value}
+                isSelected={row.isSelected}
+                handleSelect={this.props.handleSelect}
+            />
+        })
+    }
     render() {
-        const { getNumber } = this.props;
         return (
             <div>
                 <table className="numbers">
                     <tbody>
-                        <tr className="num-select">
-                            <td onClick={() => getNumber(1)}>1</td>
-                            <td onClick={() => getNumber(2)}>2</td>
-                            <td onClick={() => getNumber(3)}>3</td>
-                            <td onClick={() => getNumber(4)}>4</td>
-                            <td onClick={() => getNumber(5)}>5</td>
-                            <td onClick={() => getNumber(6)}>6</td>
-                            <td onClick={() => getNumber(7)}>7</td>
-                            <td onClick={() => getNumber(8)}>8</td>
-                            <td onClick={() => getNumber(9)}>9</td>
-                        </tr>
+                        <tr>
 
+                        {this.createNumbers()}
+                        </tr>
                     </tbody>
                 </table>
             </div>

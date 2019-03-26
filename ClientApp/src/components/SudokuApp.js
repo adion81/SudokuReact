@@ -1,14 +1,60 @@
 import React, { Component } from 'react';
 import Timer from './Timer';
 import Sudoku from './Sudoku.js';
-import { NumberSelect } from './NumberSelect';
+import NumberSelect from './NumberSelect';
 
 import './Sudoku.css';
 
 export class SudokuApp extends Component {
 
     state = {
-        numbers: [1,2,3,4,5,6,7,8,9],
+        numbers: [
+            {
+                value: 1,
+                id: 1,
+                isSelected: false
+            },
+            {
+                value: 2,
+                id: 2,
+                isSelected: false
+            },
+            {
+                value: 3,
+                id: 3,
+                isSelected: false
+            },
+            {
+                value: 4,
+                id: 4,
+                isSelected: false
+            },
+            {
+                value: 5,
+                id: 5,
+                isSelected: false
+            },
+            {
+                value: 6,
+                id: 6,
+                isSelected: false
+            },
+            {
+                value: 7,
+                id: 7,
+                isSelected: false
+            },
+            {
+                value: 8,
+                id: 8,
+                isSelected: false
+            },
+            {
+                value: 9,
+                id: 9,
+                isSelected: false
+            }
+        ],
         isGuessing: true,
         guess: 0,
         grid: [
@@ -438,6 +484,12 @@ export class SudokuApp extends Component {
         ]
     };
 
+    handleSelect = (id) => {
+        this.setState( prevState => ({
+            isSelected: !prevState.numbers[id - 1].isSelected
+        }))
+    }
+
     getNumber = (num) => {
         console.log(num);
         this.setState( prevState => ({
@@ -464,8 +516,9 @@ export class SudokuApp extends Component {
                 </main>
                 <footer>
                     <NumberSelect
+                        numbers={this.state.numbers}
                         getNumber={this.getNumber}
-                        isGuessing={this.state.isGuessing}
+                        handleSelect={this.handleSelect}
                     />
                 </footer>
             </div>
