@@ -2,7 +2,7 @@ h1{
     font-size: 500%;
     text-align: center;
 }
-.main{
+main{
     margin-top: 4%;
     display: grid;
     grid-template-columns: 20% 60% 20%;
@@ -39,4 +39,15 @@ td{
     height: 55px;
     font-size: 200%;
     text-align: center;
+}
+.numbers{
+    width: 300px;
+    margin: 5% auto;
+    border: 1px solid black;
+}
+.numbers td{
+    width: 33px;
+    height: 33px;
+    font-size: 150%;
+    cursor: pointer;
 }
