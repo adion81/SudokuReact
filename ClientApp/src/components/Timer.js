@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 class Timer extends Component {
 
+
     state = {
         isRunning: false,
         elapsedTime: 0,
@@ -31,6 +32,7 @@ class Timer extends Component {
         this.setState( prevState => ({
             isRunning: !prevState.isRunning
         }));
+        this.props.startPlaying();
         if (!this.state.isRunning) {
             this.setState({previousTime: Date.now() });
         }
@@ -51,7 +53,7 @@ class Timer extends Component {
             <div className="timer">
                 <span className="counter">({ minutes }:{ (clockSeconds < 10) ? ('0' + clockSeconds) : clockSeconds })</span>
                 <button onClick={ this.handleStopwatch }>
-                {this.state.isRunning ? 'RESET' : 'START'}
+                {this.state.isRunning ? 'STOP' : 'START'}
                 </button>
             </div>
         );

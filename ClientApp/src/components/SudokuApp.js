@@ -8,6 +8,7 @@ import './Sudoku.css';
 export class SudokuApp extends Component {
 
     state = {
+        isPlaying: false,
         selected: {
             row: 0,
             column: 0,
@@ -726,22 +727,40 @@ export class SudokuApp extends Component {
 
     handleSelect = (id) => {
         console.log(id);
-        this.setState( prevState => ({
-            selectedNumber: prevState.selectedNumber = id
-        }))
+        let sId = this.state.selected.square;
+        console.log(sId);
+        let square = this.state.grid.map(g => {
+            g.map(cell => {
+                if(cell.id === sId){
+                    console.log(cell);
+                    if(cell.value === id){
+                        cell.isSolved = true;
+                    }
+                }
+                return cell;
+            })
+            return g;
+        })
+        this.setState({grid: square});
+
     }
     highlightSelect = (row, column, box, id) => {
-        console.log("Row: "+ row + ", Column: "+ column + ", Box: "+ box);
-        this.setState( prevState => ({
-            selected: {
-                row: row,
-                column: column,
-                box: box,
-                square: id
-            }
-
+        if(this.state.isPlaying === true){
+            console.log("Row: "+ row + ", Column: "+ column + ", Box: "+ box);
+            this.setState( prevState => ({
+                selected: {
+                    row: row,
+                    column: column,
+                    box: box,
+                    square: id
+                }
+            }))
+        }
+    }
+    startPlaying =() => {
+        this.setState(prevState =>({
+            isPlaying: !prevState.isPlaying
         }))
-
     }
 
 
@@ -772,7 +791,9 @@ export class SudokuApp extends Component {
                 <h1>Sudoku</h1>
                 <main >
     
-                    <Timer />
+                    <Timer 
+                        startPlaying={this.startPlaying}
+                    />
     
                     <Sudoku
                         grid={this.state.grid}

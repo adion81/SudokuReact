@@ -66,11 +66,11 @@ main{
     cursor: pointer;
 }
 .selected{
-    background-color: lightgrey;
+    background-color: rgba(255, 153, 0, 0.788);
     z-index: 0;
     border-color: red;
 }
 .selected-box{
     border-color: red;
-    background-color: orange;
+    background-color: black;
 }
