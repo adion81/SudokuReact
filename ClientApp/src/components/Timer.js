@@ -38,11 +38,6 @@ class Timer extends Component {
         }
     };
 
-    stopStopwatch = () => {
-        this.setState({
-            elapsedTime: 0
-        });
-    }
 
     
     render() {
@@ -52,8 +47,11 @@ class Timer extends Component {
         return (
             <div className="timer">
                 <span className="counter">({ minutes }:{ (clockSeconds < 10) ? ('0' + clockSeconds) : clockSeconds })</span>
-                <button onClick={ this.handleStopwatch }>
+                <button onClick={ this.handleStopwatch } className={this.state.isRunning ? 'running':''}>
                 {this.state.isRunning ? 'STOP' : 'START'}
+                </button>
+                <button onClick={ this.props.resetGame }>
+                RESET  
                 </button>
             </div>
         );

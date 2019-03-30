@@ -8,7 +8,6 @@ export default class Sudoku extends Component {
 
             return <tr>{row.map(function (cell) {
                 return <Square
-
                     id={cell.id}
                     isSolved={cell.isSolved}
                     value={cell.value}
