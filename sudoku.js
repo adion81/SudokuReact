@@ -64,55 +64,20 @@ function buildPuzzle(board){
 
 function verifyBoard(board){
     for(let i = 0; i < board.length; i++){
-        // console.log("one row accross is: ", board[i].length == new Set(board[i]).size);
-        // console.log("one row down is: ", board[i].length == new Set(board.map(x => x[i])).size);
         let size = Math.sqrt(board.length);
         let testArr = [];
-        // console.log(Math.floor(i/size%size)*size);
-        // console.log((i%size)*size);
         for(let j = Math.floor(i/size%size)*size; j < (Math.floor(i/size%size)*size) + 3; j++){
             for(let k = Math.floor(i/size%size)*size; k < (Math.floor(i/size%size)*size) + 3; k++){
                 testArr.push(board[j][k]);
             }
         }
-        // console.log("Square ", i, " is ", testArr.length == new Set(testArr).size);
         if(!(board[i].length == new Set(board[i]).size) || !(board.map(x => x[i]).length == new Set(board.map(x => x[i])).size) || !(testArr.length == new Set(testArr).size)){
             // NOT UNIQUE!!!
             return false;
         }
-        // thinking (i%3*3) and Math.floor(i/3%3) should give top left corner of new square
-        // put another for loop going 3 and move from there and add to a new array to be checked for uniquness.
-
     }
     // IS UNIQUE!
     return true;
-
-    // for( let i = 0; i < board[x].length; i++){
-    //     if(Array.isArray(board[x][i])){
-    //         if(board[x][i].includes(board[x][y])){
-    //             board[x][i].splice(board[x][i].indexOf(board[x][y]), 1);
-    //         }
-    //     }
-    // }
-    // for(let i = 0; i < board.length; i++){
-    //     if(Array.isArray(board[i][y])){
-    //         if(board[i][y].includes(board[x][y])){
-    //             board[i][y].splice(board[i][y].indexOf(board[x][y]), 1);
-    //         }
-    //     }
-    // }
-    // for(let i = Math.floor(x / size) * size; i < Math.floor(x / size) * size + size; i++){
-    //     for(let j = Math.floor(y / size) * size; j < Math.floor(y / size) * size + size; j++){
-    //         if(Array.isArray(board[i][j])){
-    //             if(board[i][j].includes(board[x][y])){
-    //                 board[i][j].splice(board[i][j].indexOf(board[x][y]), 1);
-    //             }
-    //         } else if(!board[i][j]){
-    //             // possibly delete this else if
-
-    //         }
-    //     }
-    // }
 }
 
 //function to generate a new board.
