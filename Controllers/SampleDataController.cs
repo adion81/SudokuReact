@@ -22,19 +22,38 @@ namespace Sudoku.Controllers
         }
         public JsonResult testing(){
             List<List<int>> solved = new List<List<int>>();
-            solved.Add(new List<int>{1,2,3,4,5,6,7,8,9});
-            solved.Add(new List<int>{1,2,3,4,5,6,7,8,9});
-
-            //     [[1,2,3,4,5,6,7,8,9],
-            //     [4,5,6,7,8,9,1,2,3]]
-            // }
-            List<int> testing = new List<int>();
-            testing.Add(5);
-            List<GridCell> row = new List<GridCell>();
-            row.Add(new GridCell( 9, true, 1));
-            row.Add(new GridCell(1, false, 2));
+            solved.Add(new List<int>{9,1,8,5,7,4,2,6,3});
+            solved.Add(new List<int>{6,3,5,9,1,2,4,8,7});
+            solved.Add(new List<int>{2,4,7,8,3,6,9,1,5});
+            solved.Add(new List<int>{7,6,4,2,8,3,1,5,9});
+            solved.Add(new List<int>{3,9,2,6,5,1,8,7,4});
+            solved.Add(new List<int>{8,5,1,4,9,7,6,3,2});
+            solved.Add(new List<int>{5,7,6,1,4,9,3,2,8});
+            solved.Add(new List<int>{1,8,9,3,2,5,7,4,6});
+            solved.Add(new List<int>{4,2,3,7,6,8,5,9,1});
+            List<List<int>> puzzle = new List<List<int>>();
+            puzzle.Add(new List<int>{9,0,8,0,0,4,2,6,3});
+            puzzle.Add(new List<int>{0,3,0,9,1,2,0,8,7});
+            puzzle.Add(new List<int>{2,4,7,0,3,6,9,1,0});
+            puzzle.Add(new List<int>{0,6,4,0,8,0,1,5,0});
+            puzzle.Add(new List<int>{0,9,0,0,5,1,0,7,4});
+            puzzle.Add(new List<int>{8,5,0,0,0,7,6,3,2});
+            puzzle.Add(new List<int>{5,0,0,0,0,0,3,2,0});
+            puzzle.Add(new List<int>{1,8,9,0,0,5,0,4,6});
+            puzzle.Add(new List<int>{0,2,3,7,0,0,0,0,1});
             List<List<GridCell>> board = new List<List<GridCell>>();
-            board.Add(row);
+            puzzle.ForEach(Console.WriteLine);
+            for(int i = 0; i < solved.Count; i++){
+                List<GridCell> row = new List<GridCell>();
+                for(int j = 0; j < solved.Count; j++){
+                    bool isSolved = true;
+                    if(puzzle[i][j] == 0){
+                        isSolved = false;
+                    }
+                    row.Add(new GridCell( solved[i][j], isSolved, ((i * solved.Count) + j ) + 1));
+                }
+                board.Add(row);
+            }
             var output = JsonConvert.SerializeObject(board);
             System.Console.WriteLine(output);
             return Json(output);
@@ -45,380 +64,36 @@ namespace Sudoku.Controllers
         {
             return testing();
         }
-        // List<List<GridCell>> grid = new List<List<GridCell>>() { [
-        //     [
-        //         {value: 9,
-        //             isSolved: true,
-        //             id: 1,
-        //         },
-        //         {value: 1,
-        //             isSolved: false,
-        //             id: 2,
-        //         },
-        //         {value: 8,
-        //             isSolved: true,
-        //             id: 3,
-        //         },
-        //         {value: 5,
-        //             isSolved: false,
-        //             id: 4,
-        //         },
-        //         {value: 7,
-        //             isSolved: false,
-        //             id: 5,
-        //         },
-        //         {value: 4,
-        //             isSolved: true,
-        //             id: 6,
-        //         },
-        //         {value: 2,
-        //             isSolved: true,
-        //             id: 7,
-        //         },
-        //         {value: 6,
-        //             isSolved: true,
-        //             id: 8,
-        //         },
-        //         {value: 3,
-        //             isSolved: true,
-        //             id: 9,
-        //         }
-        //     ],
-        //     [
-        //         {value: 6,
-        //             isSolved: false,
-        //             id: 10,
-        //         },
-        //         {value: 3,
-        //             isSolved: true,
-        //             id: 11,
-        //         },
-        //         {value: 5,
-        //             isSolved: false,
-        //             id: 12,
-        //         },
-        //         {value: 9,
-        //             isSolved: true,
-        //             id: 13,
-        //         },
-        //         {value: 1,
-        //             isSolved: true,
-        //             id: 14,
-        //         },
-        //         {value: 2,
-        //             isSolved: true,
-        //             id: 15,
-        //         },
-        //         {value: 4,
-        //             isSolved: false,
-        //             id: 16,
-        //         },
-        //         {value: 8,
-        //             isSolved: true,
-        //             id: 17,
-        //         },
-        //         {value: 7,
-        //             isSolved: true,
-        //             id: 18,
-        //         }
-        //     ],
-        //     [
-        //         {value: 2,
-        //             isSolved: true,
-        //             id: 19,
-        //         },
-        //         {value: 4,
-        //             isSolved: true,
-        //             id: 20,
-        //         },
-        //         {value: 7,
-        //             isSolved: true,
-        //             id: 21,
-        //         },
-        //         {value: 8,
-        //             isSolved: false,
-        //             id: 22,
-        //         },
-        //         {value: 3,
-        //             isSolved: true,
-        //             id: 23,
-        //         },
-        //         {value: 6,
-        //             isSolved: true,
-        //             id: 24,
-        //         },
-        //         {value: 9,
-        //             isSolved: true,
-        //             id: 25,
-        //         },
-        //         {value: 1,
-        //             isSolved: true,
-        //             id: 26,
-        //         },
-        //         {value: 5,
-        //             isSolved: false,
-        //             id: 27,
-        //         }
-        //     ],
-        //     [
-        //         {value: 7,
-        //             isSolved: false,
-        //             id: 28,
-        //         },
-        //         {value: 6,
-        //             isSolved: true,
-        //             id: 29,
-        //         },
-        //         {value: 4,
-        //             isSolved: true,
-        //             id: 30,
-        //         },
-        //         {value: 2,
-        //             isSolved: false,
-        //             id: 31,
-        //         },
-        //         {value: 8,
-        //             isSolved: true,
-        //             id: 32,
-        //         },
-        //         {value: 3,
-        //             isSolved: false,
-        //             id: 33,
-        //         },
-        //         {value: 1,
-        //             isSolved: true,
-        //             id: 34,
-        //         },
-        //         {value: 5,
-        //             isSolved: true,
-        //             id: 35,
-        //         },
-        //         {value: 9,
-        //             isSolved: false,
-        //             id: 36,
-        //         }
-        //     ],
-        //     [
-        //         {value: 3,
-        //             isSolved: false,
-        //             id: 37,
-        //         },
-        //         {value: 9,
-        //             isSolved: true,
-        //             id: 38,
-        //         },
-        //         {value: 2,
-        //             isSolved: false,
-        //             id: 39,
-        //         },
-        //         {value: 6,
-        //             isSolved: false,
-        //             id: 40,
-        //         },
-        //         {value: 5,
-        //             isSolved: true,
-        //             id: 41,
-        //         },
-        //         {value: 1,
-        //             isSolved: true,
-        //             id: 42,
-        //         },
-        //         {value: 8,
-        //             isSolved: false,
-        //             id: 43,
-        //         },
-        //         {value: 7,
-        //             isSolved: true,
-        //             id: 44,
-        //         },
-        //         {value: 4,
-        //             isSolved: true,
-        //             id: 45,
-        //         }
-        //     ],
-        //     [
-        //         {value: 8,
-        //             isSolved: true,
-        //             id: 46,
-        //         },
-        //         {value: 5,
-        //             isSolved: true,
-        //             id: 47,
-        //         },
-        //         {value: 1,
-        //             isSolved: false,
-        //             id: 48,
-        //         },
-        //         {value: 4,
-        //             isSolved: false,
-        //             id: 49,
-        //         },
-        //         {value: 9,
-        //             isSolved: false,
-        //             id: 50,
-        //         },
-        //         {value: 7,
-        //             isSolved: true,
-        //             id: 51,
-        //         },
-        //         {value: 6,
-        //             isSolved: true,
-        //             id: 52,
-        //         },
-        //         {value: 3,
-        //             isSolved: true,
-        //             id: 53,
-        //         },
-        //         {value: 2,
-        //             isSolved: true,
-        //             id: 54,
-        //         }
-        //     ],
-        //     [
-        //         {value: 5,
-        //             isSolved: true,
-        //             id: 55,
-        //         },
-        //         {value: 7,
-        //             isSolved: false,
-        //             id: 56,
-        //         },
-        //         {value: 6,
-        //             isSolved: false,
-        //             id: 57,
-        //         },
-        //         {value: 1,
-        //             isSolved: false,
-        //             id: 58,
-        //         },
-        //         {value: 4,
-        //             isSolved: false,
-        //             id: 59,
-        //         },
-        //         {value: 9,
-        //             isSolved: false,
-        //             id: 60,
-        //         },
-        //         {value: 3,
-        //             isSolved: true,
-        //             id: 61,
-        //         },
-        //         {value: 2,
-        //             isSolved: true,
-        //             id: 62,
-        //         },
-        //         {value: 8,
-        //             isSolved: false,
-        //             id: 63,
-        //         }
-        //     ],
-        //     [
-        //         {value: 1,
-        //             isSolved: true,
-        //             id: 64,
-        //         },
-        //         {value: 8,
-        //             isSolved: true,
-        //             id: 65,
-        //         },
-        //         {value: 9,
-        //             isSolved: true,
-        //             id: 66,
-        //         },
-        //         {value: 3,
-        //             isSolved: false,
-        //             id: 67,
-        //         },
-        //         {value: 2,
-        //             isSolved: false,
-        //             id: 68,
-        //         },
-        //         {value: 5,
-        //             isSolved: true,
-        //             id: 69,
-        //         },
-        //         {value: 7,
-        //             isSolved: false,
-        //             id: 70,
-        //         },
-        //         {value: 4,
-        //             isSolved: true,
-        //             id: 71,
-        //         },
-        //         {value: 6,
-        //             isSolved: true,
-        //             id: 72,
-        //         }
-        //     ],
-        //     [
-        //         {value: 4,
-        //             isSolved: false,
-        //             id: 73,
-        //         },
-        //         {value: 2,
-        //             isSolved: true,
-        //             id: 74,
-        //         },
-        //         {value: 3,
-        //             isSolved: true,
-        //             id: 75,
-        //         },
-        //         {value: 7,
-        //             isSolved: true,
-        //             id: 76,
-        //         },
-        //         {value: 6,
-        //             isSolved: false,
-        //             id: 77,
-        //         },
-        //         {value: 8,
-        //             isSolved: false,
-        //             id: 78,
-        //         },
-        //         {value: 5,
-        //             isSolved: false,
-        //             id: 79,
-        //         },
-        //         {value: 9,
-        //             isSolved: false,
-        //             id: 80,
-        //         },
-        //         {value: 1,
-        //             isSolved: true,
-        //             id: 81,
-        //         }
-        //     ]
-        // ]};
         private static string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
-[HttpGet("[action]")]
-public IEnumerable<WeatherForecast> WeatherForecasts()
-{
-    var rng = new Random();
-    return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-    {
-        DateFormatted = DateTime.Now.AddDays(index).ToString("d"),
-        TemperatureC = rng.Next(-20, 55),
-        Summary = Summaries[rng.Next(Summaries.Length)]
-    });
-}
-
-public class WeatherForecast
-{
-    public string DateFormatted { get; set; }
-    public int TemperatureC { get; set; }
-    public string Summary { get; set; }
-
-    public int TemperatureF
-    {
-        get
+        [HttpGet("[action]")]
+        public IEnumerable<WeatherForecast> WeatherForecasts()
         {
-            return 32 + (int)(TemperatureC / 0.5556);
+            var rng = new Random();
+            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            {
+                DateFormatted = DateTime.Now.AddDays(index).ToString("d"),
+                TemperatureC = rng.Next(-20, 55),
+                Summary = Summaries[rng.Next(Summaries.Length)]
+            });
         }
-    }
-}
+
+        public class WeatherForecast
+        {
+            public string DateFormatted { get; set; }
+            public int TemperatureC { get; set; }
+            public string Summary { get; set; }
+
+            public int TemperatureF
+            {
+                get
+                {
+                    return 32 + (int)(TemperatureC / 0.5556);
+                }
+            }
+        }
     }
 }
