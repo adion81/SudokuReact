@@ -1,18 +1,83 @@
 // output of what a board should look like
-var board = [[0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0]];
+// used to test quickly all possiblities
+var board = [[1,2,0,[],[],6,7,8,9],
+            [4,5,6,7,8,9,1,2,3],
+            [7,8,9,1,2,3,4,5,6],
+            [2,3,4,5,6,7,8,9,1],
+            [5,6,7,8,0,1,2,3,4],
+            [8,9,1,0,3,4,5,6,7],
+            [3,4,5,6,7,8,9,1,2],
+            [6,7,8,9,1,2,3,4,5],
+            [9,1,2,3,4,5,6,7,8]];
+
+// test easy puzzle
+var easy_puzzle = [[1,2,0,0,0,6,7,8,9],
+                    [4,5,6,7,8,9,1,2,3],
+                    [7,8,9,1,2,3,4,5,6],
+                    [2,3,4,5,6,7,8,9,1],
+                    [5,6,7,8,0,1,2,3,4],
+                    [8,9,1,0,3,4,5,6,7],
+                    [3,4,5,6,7,8,9,1,2],
+                    [6,7,8,9,1,2,3,4,5],
+                    [9,1,2,3,4,5,6,7,8]];
+
+// test hard puzzle
+var hard_puzzle = [[1,2,0,0,0,6,7,8,9],
+                    [4,5,6,7,8,9,1,2,3],
+                    [7,8,9,1,2,3,4,5,6],
+                    [2,3,4,5,6,7,8,9,1],
+                    [5,6,7,8,0,1,2,3,4],
+                    [8,9,1,0,3,4,5,6,7],
+                    [3,4,5,6,7,8,9,1,2],
+                    [6,7,8,9,1,2,3,4,5],
+                    [9,1,2,3,4,5,6,7,8]];             
 
 // will solve a board once its created or inputed
-solver(board);
-function solver(board){
+function bruteSolver(board){
     // solver code goes in here.
+    board = fillPosibilities(board);
+}
+
+function fillPosibilities(board){
+    for(let i = 0; i < board.length; i++){
+        for(let j = 0; j < board[i].length; j++){
+            if(board[i][j] == 0 || board[i][j] == []){
+                board[i][j] = Array(board.length).fill().map((x,i)=>i+1);
+            }
+        }
+    }
+    removeDupes(board);
+    console.table(board);
+}
+
+function buildPuzzle(board){
+    // needs to be solver(board)
+    // want to make sure there is just one solution.
+    while(verifyBoard(board)){
+        let x = Math.floor(Math.random()*9);
+        let y = Math.floor(Math.random()*9);
+        board[x][y] = 0;
+        board[(board.length - 1) - x][(board.length - 1) - y] = 0;
+    }
+    console.table(board);
+}
+
+function verifyBoard(board){
+    for(let i = 0; i < board.length; i++){
+        let size = Math.sqrt(board.length);
+        let testArr = [];
+        for(let j = Math.floor(i/size%size)*size; j < (Math.floor(i/size%size)*size) + 3; j++){
+            for(let k = Math.floor(i/size%size)*size; k < (Math.floor(i/size%size)*size) + 3; k++){
+                testArr.push(board[j][k]);
+            }
+        }
+        if(!(board[i].length == new Set(board[i]).size) || !(board.map(x => x[i]).length == new Set(board.map(x => x[i])).size) || !(testArr.length == new Set(testArr).size)){
+            // NOT UNIQUE!!!
+            return false;
+        }
+    }
+    // IS UNIQUE!
+    return true;
 }
 
 //function to generate a new board.
@@ -77,7 +142,12 @@ function fillBoard(size = 9, board = new Array(size)){
     }
     // logs "finished" board
     // console.log("DONE!");
-    console.table(board);
+    if(verifyBoard(board)){
+        console.table(board);
+        return board;
+    } else {
+        fillBoard();
+    }
 }
 
 // Looks for spots where only on possible number available on the board
@@ -125,6 +195,8 @@ function removeDupes(board, x, y, size){
     }
     return board;
 }
-
-
-fillBoard();
+// console.log("should be false ")
+// console.log(verifyBoard(board));
+// fillBoard();
+// buildPuzzle(fillBoard());
+fillPosibilities(board);
