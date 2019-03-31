@@ -799,7 +799,7 @@ export class SudokuApp extends Component {
     render() {
 
         return (
-            <div>
+            <div className="sudoku-body">
                 <h1>Sudoku</h1>
                 <main >
     

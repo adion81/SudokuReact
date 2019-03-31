@@ -1,3 +1,6 @@
+.sudoku-body{
+    background-color: orange;
+}
 h1{
     font-size: 500%;
     text-align: center;
@@ -13,7 +16,7 @@ main{
     grid-column: 1;
     grid-row: 1;
     display: grid;
-    grid-template-columns: 20% 30% 30% 20%;
+    grid-template-columns: 10% 40% 40% 10%;
     grid-template-rows: 10% 40% 40% 10%;
     border: 5px solid black;
 }
