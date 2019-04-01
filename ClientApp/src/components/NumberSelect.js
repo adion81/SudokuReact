@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
 import NumberSquare from './NumberSquare';
 
 export default class NumberSelect extends Component {
@@ -7,10 +9,10 @@ export default class NumberSelect extends Component {
             return <NumberSquare
                 id={row.id}
                 value={row.value}
-                isSelected={row.isSelected}
                 handleSelect={this.props.handleSelect}
+                selectedNumber={this.props.selectedNumber}
             />
-        })
+        }, this)
     }
     render() {
         return (
@@ -26,4 +28,9 @@ export default class NumberSelect extends Component {
             </div>
         );
     }
+}
+
+NumberSelect.propTypes = {
+    handleSelect: PropTypes.func,
+    selectedNumber: PropTypes.number
 }
