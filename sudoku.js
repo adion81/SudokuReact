@@ -1,6 +1,6 @@
 // output of what a board should look like
 // used to test quickly all possiblities
-var board = [[1,2,0,[],[],6,7,8,9],
+var test_board = [[1,2,0,[],[],6,7,8,9],
             [4,5,6,7,8,9,1,2,3],
             [7,8,9,1,2,3,4,5,6],
             [2,3,4,5,6,7,8,9,1],
@@ -11,43 +11,133 @@ var board = [[1,2,0,[],[],6,7,8,9],
             [9,1,2,3,4,5,6,7,8]];
 
 // test easy puzzle
-var easy_puzzle = [[1,2,0,0,0,6,7,8,9],
-                    [4,5,6,7,8,9,1,2,3],
-                    [7,8,9,1,2,3,4,5,6],
-                    [2,3,4,5,6,7,8,9,1],
-                    [5,6,7,8,0,1,2,3,4],
-                    [8,9,1,0,3,4,5,6,7],
-                    [3,4,5,6,7,8,9,1,2],
-                    [6,7,8,9,1,2,3,4,5],
-                    [9,1,2,3,4,5,6,7,8]];
+var easy_puzzle = [[0,0,2,1,7,0,0,0,6],
+                    [0,9,0,0,0,8,0,5,3],
+                    [0,4,0,3,0,0,0,1,8],
+                    [0,0,0,8,0,0,6,4,0],
+                    [9,8,0,0,2,7,0,0,1],
+                    [0,0,3,0,9,0,0,2,7],
+                    [5,0,1,9,0,0,0,7,0],
+                    [0,7,0,4,5,1,9,6,0],
+                    [4,2,9,0,3,0,0,0,0]];
 
 // test hard puzzle
-var hard_puzzle = [[1,2,0,0,0,6,7,8,9],
-                    [4,5,6,7,8,9,1,2,3],
-                    [7,8,9,1,2,3,4,5,6],
-                    [2,3,4,5,6,7,8,9,1],
-                    [5,6,7,8,0,1,2,3,4],
-                    [8,9,1,0,3,4,5,6,7],
-                    [3,4,5,6,7,8,9,1,2],
-                    [6,7,8,9,1,2,3,4,5],
-                    [9,1,2,3,4,5,6,7,8]];             
+var hard_puzzle = [[0,8,0,0,2,0,5,6,0],
+                    [0,0,0,1,0,0,0,0,7],
+                    [0,0,0,0,0,0,0,0,0],
+                    [0,5,0,0,9,0,4,0,8],
+                    [0,0,7,8,0,0,0,0,3],
+                    [0,9,0,0,1,0,0,5,0],
+                    [2,0,4,0,0,0,8,0,0],
+                    [0,6,0,0,8,5,0,0,0],
+                    [0,0,0,2,0,0,1,0,0]];             
 
 // will solve a board once its created or inputed
 function bruteSolver(board){
-    // solver code goes in here.
+    console.table(board);
+
+    // console.log("111111111111111111111111");
+    let result;
+    let solutions = 0;
     board = fillPosibilities(board);
+    for(let i = 0; i < board.length; i++){
+        for(let j = 0; j < board[i].length; j++){
+            if(typeof board[i][j] == 'number'){
+                // console.log("3333333333333333");
+                removeDupes(board, i, j, Math.sqrt(board.length));
+            }
+        }
+    }
+    let singles = lookForSingles(board);
+    while(singles){
+        // console.table(board);
+        board = singles;
+        singles = lookForSingles(board);
+    }
+    if(noPossibilities(board)){
+        // console.log("2222222222222");
+        return false;
+    }
+    for(let i = 0; i < board.length; i++){
+        for(let j = 0; j < board[i].length; j++){
+            if(Array.isArray(board[i][j])){
+                for(let k = 0; k < board[i][j].length; k++){
+                    // console.log(i, j, k);
+                    // testBoard = board;
+                    let testBoard = JSON.parse(JSON.stringify(board));
+                    console.log(testBoard[i][j]);
+                    testBoard[i][j] = board[i][j][k];
+                    console.log(testBoard[i][j]);
+                    testBoard = removeDupes(testBoard, i, j, Math.sqrt(board.length));
+                    // console.log(board[i][j]);
+                    // console.table(board[0]);
+                    // console.table(board);
+                    testBoard = bruteSolver(testBoard);
+                    if(testBoard && isSolved(testBoard)){
+                        console.log("3333333333333");
+                        console.table(testBoard);
+                        board = testBoard;
+                        solutions++;
+                    }
+                }
+                
+            }
+        }
+    }
+    if(noPossibilities(board) || verifyBoard(board)){
+        // console.log("22222222222222222222");
+        return false;
+    }
+    // console.table(board);
+    // console.log(verifyBoard(board));
+    // console.log(isSolved(board));
+    // console.log(solutions);
+    // if(isSolved(board)){
+    //     if(verifyBoard(board)){
+    //         return 1;
+    //     } else {
+    //         return -1;
+    //     }
+    // }
+    return board;
 }
 
 function fillPosibilities(board){
     for(let i = 0; i < board.length; i++){
         for(let j = 0; j < board[i].length; j++){
-            if(board[i][j] == 0 || board[i][j] == []){
+            if(board[i][j] === 0){
+                // console.log("44444444444444");
                 board[i][j] = Array(board.length).fill().map((x,i)=>i+1);
             }
         }
     }
-    removeDupes(board);
-    console.table(board);
+    // console.table(board);
+    return board;
+    // removeDupes(board);
+}
+
+function noPossibilities(board){
+    for(let i = 0; i < board.length; i++){
+        for(let j = 0; j < board[i].length; j++){
+            if(Array.isArray(board[i][j]) && !board[i][j].length){
+                // console.table(board);
+                // console.log("impossible board!");
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+function isSolved(board){
+    for(let i = 0; i < board.length; i++){
+        for(let j = 0; j < board[i].length; j++){
+            if(typeof board[i][j] !== 'number'){
+                return false;
+            }
+        }
+    }
+    return true;
 }
 
 function buildPuzzle(board){
@@ -152,9 +242,11 @@ function fillBoard(size = 9, board = new Array(size)){
 
 // Looks for spots where only on possible number available on the board
 function lookForSingles(board){
+    let found = false;
     for( let i = 0; i < board.length; i++){
         for(let j = 0; j< board[i].length; j++){
             if(Array.isArray(board[i][j]) && board[i][j].length == 1){
+                found = true;
                 board[i][j] = board[i][j][0];
                 board = removeDupes(board, i, j, Math.sqrt(board.length));
             } else if(!board[i][j]){
@@ -162,7 +254,10 @@ function lookForSingles(board){
             }
         }
     }
-    return board;
+    if(found){
+        return board;
+    }
+    return false;
 }
 
 // looks through rows and columns and 3x3 squares and removes the number given.
@@ -199,4 +294,4 @@ function removeDupes(board, x, y, size){
 // console.log(verifyBoard(board));
 // fillBoard();
 // buildPuzzle(fillBoard());
-fillPosibilities(board);
+console.log(bruteSolver(hard_puzzle));
