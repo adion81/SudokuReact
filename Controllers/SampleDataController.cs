@@ -54,12 +54,12 @@ namespace Sudoku.Controllers
                 }
                 board.Add(row);
             }
-            var output = JsonConvert.SerializeObject(board);
-            System.Console.WriteLine(output);
-            return Json(output);
+            Dictionary<string,List<List<GridCell>>> returnOutput = new Dictionary<string,List<List<GridCell>>>();
+            returnOutput.Add("grid", board);
+            return Json(returnOutput);
         }
 
-        [HttpGet("[action]")]
+        [HttpGet("board")]
         public JsonResult board()
         {
             return testing();
