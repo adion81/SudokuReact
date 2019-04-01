@@ -7,8 +7,14 @@ import './Sudoku.css';
 
 export class SudokuApp extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props)
+
+        // fetch('https://localhost:5000/')
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         this.setState({ forecasts: data, loading: false });
+        //     });
 
         this.state = {
             isPlaying: false,
@@ -90,13 +96,13 @@ export class SudokuApp extends Component {
                         id: 4,
                         row: 1,
                         column: 4,
-                        box:2
+                        box: 2
                     },
                     {
                         value: 7,
                         isSolved: false,
                         id: 5,
-                        row:1,
+                        row: 1,
                         column: 5,
                         box: 2,
                     },
@@ -732,7 +738,7 @@ export class SudokuApp extends Component {
 
     }
 
-    resetGame = () =>{
+    resetGame = () => {
         window.location.reload();
     }
 
@@ -743,9 +749,9 @@ export class SudokuApp extends Component {
         console.log(sId);
         let square = this.state.grid.map(g => {
             g.map(cell => {
-                if(cell.id === sId){
+                if (cell.id === sId) {
                     console.log(cell);
-                    if(cell.value === id){
+                    if (cell.value === id) {
                         cell.isSolved = true;
                     }
                 }
@@ -753,13 +759,13 @@ export class SudokuApp extends Component {
             })
             return g;
         })
-        this.setState({grid: square});
+        this.setState({ grid: square });
 
     }
     highlightSelect = (row, column, box, id) => {
-        if(this.state.isPlaying === true){
-            console.log("Row: "+ row + ", Column: "+ column + ", Box: "+ box);
-            this.setState( prevState => ({
+        if (this.state.isPlaying === true) {
+            console.log("Row: " + row + ", Column: " + column + ", Box: " + box);
+            this.setState(prevState => ({
                 selected: {
                     row: row,
                     column: column,
@@ -769,8 +775,8 @@ export class SudokuApp extends Component {
             }))
         }
     }
-    startPlaying =() => {
-        this.setState(prevState =>({
+    startPlaying = () => {
+        this.setState(prevState => ({
             isPlaying: !prevState.isPlaying
         }))
     }
@@ -800,14 +806,14 @@ export class SudokuApp extends Component {
 
         return (
             <div className="sudoku-body">
-                <h1>Sudoku</h1>
+                <h1 className="sudoku-h1">Sudoku</h1>
                 <main >
-    
-                    <Timer 
+
+                    <Timer
                         startPlaying={this.startPlaying}
                         resetGame={this.resetGame}
                     />
-    
+
                     <Sudoku
                         grid={this.state.grid}
                         compareNumber={this.compareNumber}
@@ -823,7 +829,7 @@ export class SudokuApp extends Component {
                     />
                 </footer>
             </div>
-    
+
         );
     }
 
