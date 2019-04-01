@@ -10,11 +10,11 @@ export class SudokuApp extends Component {
     constructor(props) {
         super(props)
 
-        // fetch('https://localhost:5000/')
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         this.setState({ forecasts: data, loading: false });
-        //     });
+        fetch('api/SudokuController/sudoku/board')
+            .then(response => response.text())
+            .then(data => {
+                console.log(data);
+            });
 
         this.state = {
             isPlaying: false,
