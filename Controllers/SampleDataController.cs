@@ -14,10 +14,16 @@ namespace Sudoku.Controllers
             public int value { get; set; }
             public bool isSolved { get; set; }
             public int id { get; set; }
-            public GridCell(int val, bool solved, int id){
+            public int row { get; set; }
+            public int col { get; set; }
+            public int box { get; set; }
+            public GridCell(int val, bool solved, int id, int row, int col, int box){
                 this.value = val;
                 this.isSolved = solved;
                 this.id = id;
+                this.row = row;
+                this.col = col;
+                this.box = box;
             }
         }
         public JsonResult testing(){
@@ -50,7 +56,9 @@ namespace Sudoku.Controllers
                     if(puzzle[i][j] == 0){
                         isSolved = false;
                     }
-                    row.Add(new GridCell( solved[i][j], isSolved, ((i * solved.Count) + j ) + 1));
+                    int box = (int)(Decimal.Floor(i/3)*3)+(int)(j/3)+1;
+                    System.Console.WriteLine((Decimal.Floor(i/3)*3)+(j%3)+1);
+                    row.Add(new GridCell( solved[i][j], isSolved, ((i * solved.Count) + j ) + 1, i + 1, j + 1, box));
                 }
                 board.Add(row);
             }
