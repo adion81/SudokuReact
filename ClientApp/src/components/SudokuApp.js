@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Timer from './Timer';
 import Sudoku from './Sudoku.js';
 import NumberSelect from './NumberSelect';
+import Modal from './Modal';
 
 import './Sudoku.css';
 
@@ -10,17 +11,13 @@ export class SudokuApp extends Component {
     constructor(props) {
         super(props)
 
-        fetch('http://localhost:5000/api/sudoku/board')
-            .then(response => response.json())
-            .then(data => {
-                console.log(data.grid);
-            });
-
         this.state = {
+            message: '',
+            unSolvedSquares: 100,
             isPlaying: false,
             selected: {
                 row: 0,
-                column: 0,
+                col: 0,
                 box: 0,
                 square: 0
             },
@@ -64,674 +61,7 @@ export class SudokuApp extends Component {
             ],
             isGuessing: true,
             guess: 0,
-            grid: [
-                [
-                    {
-                        value: 9,
-                        isSolved: true,
-                        id: 1,
-                        row: 1,
-                        column: 1,
-                        box: 1
-                    },
-                    {
-                        value: 1,
-                        isSolved: false,
-                        id: 2,
-                        row: 1,
-                        column: 2,
-                        box: 1
-                    },
-                    {
-                        value: 8,
-                        isSolved: true,
-                        id: 3,
-                        row: 1,
-                        column: 3,
-                        box: 1
-                    },
-                    {
-                        value: 5,
-                        isSolved: false,
-                        id: 4,
-                        row: 1,
-                        column: 4,
-                        box: 2
-                    },
-                    {
-                        value: 7,
-                        isSolved: false,
-                        id: 5,
-                        row: 1,
-                        column: 5,
-                        box: 2,
-                    },
-                    {
-                        value: 4,
-                        isSolved: true,
-                        id: 6,
-                        row: 1,
-                        column: 6,
-                        box: 2
-                    },
-                    {
-                        value: 2,
-                        isSolved: true,
-                        id: 7,
-                        row: 1,
-                        column: 7,
-                        box: 3
-                    },
-                    {
-                        value: 6,
-                        isSolved: true,
-                        id: 8,
-                        row: 1,
-                        column: 8,
-                        box: 3
-                    },
-                    {
-                        value: 3,
-                        isSolved: true,
-                        id: 9,
-                        row: 1,
-                        column: 9,
-                        box: 3
-                    }
-                ],
-                [
-                    {
-                        value: 6,
-                        isSolved: false,
-                        id: 10,
-                        row: 2,
-                        column: 1,
-                        box: 1
-                    },
-                    {
-                        value: 3,
-                        isSolved: true,
-                        id: 11,
-                        row: 2,
-                        column: 2,
-                        box: 1
-                    },
-                    {
-                        value: 5,
-                        isSolved: false,
-                        id: 12,
-                        row: 2,
-                        column: 3,
-                        box: 1
-                    },
-                    {
-                        value: 9,
-                        isSolved: true,
-                        id: 13,
-                        row: 2,
-                        column: 4,
-                        box: 2
-                    },
-                    {
-                        value: 1,
-                        isSolved: true,
-                        id: 14,
-                        row: 2,
-                        column: 5,
-                        box: 2
-                    },
-                    {
-                        value: 2,
-                        isSolved: true,
-                        id: 15,
-                        row: 2,
-                        column: 6,
-                        box: 2
-                    },
-                    {
-                        value: 4,
-                        isSolved: false,
-                        id: 16,
-                        row: 2,
-                        column: 7,
-                        box: 3
-                    },
-                    {
-                        value: 8,
-                        isSolved: true,
-                        id: 17,
-                        row: 2,
-                        column: 8,
-                        box: 3
-                    },
-                    {
-                        value: 7,
-                        isSolved: true,
-                        id: 18,
-                        row: 2,
-                        column: 9,
-                        box: 3
-                    }
-                ],
-                [
-                    {
-                        value: 2,
-                        isSolved: true,
-                        id: 19,
-                        row: 3,
-                        column: 1,
-                        box: 1
-                    },
-                    {
-                        value: 4,
-                        isSolved: true,
-                        id: 20,
-                        row: 3,
-                        column: 2,
-                        box: 1
-                    },
-                    {
-                        value: 7,
-                        isSolved: true,
-                        id: 21,
-                        row: 3,
-                        column: 3,
-                        box: 1
-                    },
-                    {
-                        value: 8,
-                        isSolved: false,
-                        id: 22,
-                        row: 3,
-                        column: 4,
-                        box: 2
-                    },
-                    {
-                        value: 3,
-                        isSolved: true,
-                        id: 23,
-                        row: 3,
-                        column: 5,
-                        box: 2
-                    },
-                    {
-                        value: 6,
-                        isSolved: true,
-                        id: 24,
-                        row: 3,
-                        column: 6,
-                        box: 2
-                    },
-                    {
-                        value: 9,
-                        isSolved: true,
-                        id: 25,
-                        row: 3,
-                        column: 7,
-                        box: 3
-                    },
-                    {
-                        value: 1,
-                        isSolved: true,
-                        id: 26,
-                        row: 3,
-                        column: 8,
-                        box: 3
-                    },
-                    {
-                        value: 5,
-                        isSolved: false,
-                        id: 27,
-                        row: 3,
-                        column: 9,
-                        box: 3
-                    }
-                ],
-                [
-                    {
-                        value: 7,
-                        isSolved: false,
-                        id: 28,
-                        row: 4,
-                        column: 1,
-                        box: 4
-                    },
-                    {
-                        value: 6,
-                        isSolved: true,
-                        id: 29,
-                        row: 4,
-                        column: 2,
-                        box: 4
-                    },
-                    {
-                        value: 4,
-                        isSolved: true,
-                        id: 30,
-                        row: 4,
-                        column: 3,
-                        box: 4
-                    },
-                    {
-                        value: 2,
-                        isSolved: false,
-                        id: 31,
-                        row: 4,
-                        column: 4,
-                        box: 5
-                    },
-                    {
-                        value: 8,
-                        isSolved: true,
-                        id: 32,
-                        row: 4,
-                        column: 5,
-                        box: 5
-                    },
-                    {
-                        value: 3,
-                        isSolved: false,
-                        id: 33,
-                        row: 4,
-                        column: 6,
-                        box: 5
-                    },
-                    {
-                        value: 1,
-                        isSolved: true,
-                        id: 34,
-                        row: 4,
-                        column: 7,
-                        box: 6
-                    },
-                    {
-                        value: 5,
-                        isSolved: true,
-                        id: 35,
-                        row: 4,
-                        column: 8,
-                        box: 6
-                    },
-                    {
-                        value: 9,
-                        isSolved: false,
-                        id: 36,
-                        row: 4,
-                        column: 9,
-                        box: 6
-                    }
-                ],
-                [
-                    {
-                        value: 3,
-                        isSolved: false,
-                        id: 37,
-                        row: 5,
-                        column: 1,
-                        box: 4
-                    },
-                    {
-                        value: 9,
-                        isSolved: true,
-                        id: 38,
-                        row: 5,
-                        column: 2,
-                        box: 4
-                    },
-                    {
-                        value: 2,
-                        isSolved: false,
-                        id: 39,
-                        row: 5,
-                        column: 3,
-                        box: 4
-                    },
-                    {
-                        value: 6,
-                        isSolved: false,
-                        id: 40,
-                        row: 5,
-                        column: 4,
-                        box: 5
-                    },
-                    {
-                        value: 5,
-                        isSolved: true,
-                        id: 41,
-                        row: 5,
-                        column: 5,
-                        box: 5
-                    },
-                    {
-                        value: 1,
-                        isSolved: true,
-                        id: 42,
-                        row: 5,
-                        column: 6,
-                        box: 5
-                    },
-                    {
-                        value: 8,
-                        isSolved: false,
-                        id: 43,
-                        row: 5,
-                        column: 7,
-                        box: 6
-                    },
-                    {
-                        value: 7,
-                        isSolved: true,
-                        id: 44,
-                        row: 5,
-                        column: 8,
-                        box: 6
-                    },
-                    {
-                        value: 4,
-                        isSolved: true,
-                        id: 45,
-                        row: 5,
-                        column: 9,
-                        box: 6
-                    }
-                ],
-                [
-                    {
-                        value: 8,
-                        isSolved: true,
-                        id: 46,
-                        row: 6,
-                        column: 1,
-                        box: 4
-                    },
-                    {
-                        value: 5,
-                        isSolved: true,
-                        id: 47,
-                        row: 6,
-                        column: 2,
-                        box: 4
-                    },
-                    {
-                        value: 1,
-                        isSolved: false,
-                        id: 48,
-                        row: 6,
-                        column: 3,
-                        box: 4
-                    },
-                    {
-                        value: 4,
-                        isSolved: false,
-                        id: 49,
-                        row: 6,
-                        column: 4,
-                        box: 5
-                    },
-                    {
-                        value: 9,
-                        isSolved: false,
-                        id: 50,
-                        row: 6,
-                        column: 5,
-                        box: 5
-                    },
-                    {
-                        value: 7,
-                        isSolved: true,
-                        id: 51,
-                        row: 6,
-                        column: 6,
-                        box: 5
-                    },
-                    {
-                        value: 6,
-                        isSolved: true,
-                        id: 52,
-                        row: 6,
-                        column: 7,
-                        box: 6
-                    },
-                    {
-                        value: 3,
-                        isSolved: true,
-                        id: 53,
-                        row: 6,
-                        column: 8,
-                        box: 6
-                    },
-                    {
-                        value: 2,
-                        isSolved: true,
-                        id: 54,
-                        row: 6,
-                        column: 9,
-                        box: 6
-                    }
-                ],
-                [
-                    {
-                        value: 5,
-                        isSolved: true,
-                        id: 55,
-                        row: 7,
-                        column: 1,
-                        box: 7
-                    },
-                    {
-                        value: 7,
-                        isSolved: false,
-                        id: 56,
-                        row: 7,
-                        column: 2,
-                        box: 7
-                    },
-                    {
-                        value: 6,
-                        isSolved: false,
-                        id: 57,
-                        row: 7,
-                        column: 3,
-                        box: 7
-                    },
-                    {
-                        value: 1,
-                        isSolved: false,
-                        id: 58,
-                        row: 7,
-                        column: 4,
-                        box: 8
-                    },
-                    {
-                        value: 4,
-                        isSolved: false,
-                        id: 59,
-                        row: 7,
-                        column: 5,
-                        box: 8
-                    },
-                    {
-                        value: 9,
-                        isSolved: false,
-                        id: 60,
-                        row: 7,
-                        column: 6,
-                        box: 8
-                    },
-                    {
-                        value: 3,
-                        isSolved: true,
-                        id: 61,
-                        row: 7,
-                        column: 7,
-                        box: 9
-                    },
-                    {
-                        value: 2,
-                        isSolved: true,
-                        id: 62,
-                        row: 7,
-                        column: 8,
-                        box: 9
-                    },
-                    {
-                        value: 8,
-                        isSolved: false,
-                        id: 63,
-                        row: 7,
-                        column: 9,
-                        box: 9
-                    }
-                ],
-                [
-                    {
-                        value: 1,
-                        isSolved: true,
-                        id: 64,
-                        row: 8,
-                        column: 1,
-                        box: 7
-                    },
-                    {
-                        value: 8,
-                        isSolved: true,
-                        id: 65,
-                        row: 8,
-                        column: 2,
-                        box: 7
-                    },
-                    {
-                        value: 9,
-                        isSolved: true,
-                        id: 66,
-                        row: 8,
-                        column: 3,
-                        box: 7
-                    },
-                    {
-                        value: 3,
-                        isSolved: false,
-                        id: 67,
-                        row: 8,
-                        column: 4,
-                        box: 8
-                    },
-                    {
-                        value: 2,
-                        isSolved: false,
-                        id: 68,
-                        row: 8,
-                        column: 5,
-                        box: 8
-                    },
-                    {
-                        value: 5,
-                        isSolved: true,
-                        id: 69,
-                        row: 8,
-                        column: 6,
-                        box: 8
-                    },
-                    {
-                        value: 7,
-                        isSolved: false,
-                        id: 70,
-                        row: 8,
-                        column: 7,
-                        box: 9
-                    },
-                    {
-                        value: 4,
-                        isSolved: true,
-                        id: 71,
-                        row: 8,
-                        column: 8,
-                        box: 9
-                    },
-                    {
-                        value: 6,
-                        isSolved: true,
-                        id: 72,
-                        row: 8,
-                        column: 9,
-                        box: 9
-                    }
-                ],
-                [
-                    {
-                        value: 4,
-                        isSolved: false,
-                        id: 73,
-                        row: 9,
-                        column: 1,
-                        box: 7
-                    },
-                    {
-                        value: 2,
-                        isSolved: true,
-                        id: 74,
-                        row: 9,
-                        column: 2,
-                        box: 7
-                    },
-                    {
-                        value: 3,
-                        isSolved: true,
-                        id: 75,
-                        row: 9,
-                        column: 3,
-                        box: 7
-                    },
-                    {
-                        value: 7,
-                        isSolved: true,
-                        id: 76,
-                        row: 9,
-                        column: 4,
-                        box: 8
-                    },
-                    {
-                        value: 6,
-                        isSolved: false,
-                        id: 77,
-                        row: 9,
-                        column: 5,
-                        box: 8
-                    },
-                    {
-                        value: 8,
-                        isSolved: false,
-                        id: 78,
-                        row: 9,
-                        column: 6,
-                        box: 8
-                    },
-                    {
-                        value: 5,
-                        isSolved: false,
-                        id: 79,
-                        row: 9,
-                        column: 7,
-                        box: 9
-                    },
-                    {
-                        value: 9,
-                        isSolved: false,
-                        id: 80,
-                        row: 9,
-                        column: 8,
-                        box: 9
-                    },
-                    {
-                        value: 1,
-                        isSolved: true,
-                        id: 81,
-                        row: 9,
-                        column: 9,
-                        box: 9
-                    }
-                ]
-            ]
+            grid: []
         };
         
 
@@ -741,6 +71,15 @@ export class SudokuApp extends Component {
 
     resetGame = () => {
         window.location.reload();
+    }
+    componentWillMount(){
+        fetch('http://localhost:5000/api/sudoku/board')
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.grid);
+                
+                this.setState({ grid: data.grid})
+            });
     }
 
 
@@ -754,6 +93,7 @@ export class SudokuApp extends Component {
                     console.log(cell);
                     if (cell.value === id) {
                         cell.isSolved = true;
+                        this.getSolved();
                     }
                 }
                 return cell;
@@ -765,52 +105,54 @@ export class SudokuApp extends Component {
     }
 
 
-    highlightSelect = (row, column, box, id) => {
+    highlightSelect = (row, col, box, id) => {
         if (this.state.isPlaying === true) {
-            console.log("Row: " + row + ", Column: " + column + ", Box: " + box);
+            console.log("Row: " + row + ", Column: " + col + ", Box: " + box);
             this.setState(prevState => ({
                 selected: {
                     row: row,
-                    column: column,
+                    col: col,
                     box: box,
                     square: id
                 }
             }))
         }
     }
+    getSolved =() => {
+        let unSolved = 0;
+        for(var i = 0; i < this.state.grid.length; i++){
+            for(var j = 0; j < this.state.grid[i].length; j++){
+                if(this.state.grid[i][j].isSolved === false){
+                    unSolved += 1;
+                }
+            }
+        }
+        if(unSolved === 0){
+            this.setState( prevState => ({
+                message: prevState.message = 'YOU WIN!!!!',
+                
+            }))
+        }
+        this.setState( prevState => ({
+            unSolvedSquares: prevState.unSolvedSquares = unSolved
+        }))
+    }
     startPlaying = () => {
         this.setState(prevState => ({
             isPlaying: !prevState.isPlaying
         }))
     }
-
-
-    // compareNumber = (value,id) => {
-    //     if(value === this.state.selectedNumber){
-    //         console.log("It's a match!");
-    //         let newGrid = this.state.grid.map(g => {
-    //             g.map(cell => {
-    //                 if (cell.id === id){
-    //                     cell.isSolved = true
-    //                 }
-    //                 return cell
-    //             })
-    //             return g
-    //         })
-    //         console.log(newGrid);
-    //         this.setState({grid: newGrid});
-    //     }
-    //     else{
-    //         console.log("You a stupido!");
-    //         alert("A virus has been downloaded!!!");
-    //     }
-    // }
     render() {
 
         return (
             <div className="sudoku-body">
                 <h1 className="sudoku-h1">Sudoku</h1>
                 <main >
+                    <Modal 
+                        unSolvedSquares={this.state.unSolvedSquares}
+                        message={this.state.message}
+                        resetGame={this.resetGame}
+                    />
 
                     <Timer
                         startPlaying={this.startPlaying}

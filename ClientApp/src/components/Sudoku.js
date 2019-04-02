@@ -12,7 +12,7 @@ export default class Sudoku extends Component {
                     isSolved={cell.isSolved}
                     value={cell.value}
                     row={cell.row}
-                    column={cell.column}
+                    col={cell.col}
                     box={cell.box}
                     selected={this.props.selected}
                     highlightSelect={this.props.highlightSelect}
