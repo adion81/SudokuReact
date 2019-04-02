@@ -3,6 +3,7 @@ import Timer from './Timer';
 import Sudoku from './Sudoku.js';
 import NumberSelect from './NumberSelect';
 import Modal from './Modal';
+import Strike from './Strike';
 
 import './Sudoku.css';
 
@@ -12,6 +13,51 @@ export class SudokuApp extends Component {
         super(props)
 
         this.state = {
+            numOfStrikes: 0,
+            strikes: [
+                [
+                    {
+                        id: 1,
+                        made: false
+                    },
+                    {
+                        id: 2,
+                        made: false
+                    },
+                    {
+                        id: 3,
+                        made: false
+                    }
+                ],
+                [
+                    {
+                        id: 4,
+                        made: false
+                    },
+                    {
+                        id: 5,
+                        made: false
+                    },
+                    {
+                        id: 6,
+                        made: false
+                    }
+                ],
+                [
+                    {
+                        id: 7,
+                        made: false
+                    },
+                    {
+                        id: 8,
+                        made: false
+                    },
+                    {
+                        id: 9,
+                        made: false
+                    }
+                ]
+            ],
             message: '',
             unSolvedSquares: 100,
             isPlaying: false,
@@ -81,6 +127,29 @@ export class SudokuApp extends Component {
                 this.setState({ grid: data.grid})
             });
     }
+    getStrikeId = () => {
+        this.setState( prevState =>({
+            numOfStrikes: prevState.numOfStrikes + 1
+        }))
+    }
+    addStrike = () => {
+        this.getStrikeId();
+        let strike = this.state.strikes.map(row => {
+            row.map(cell => {
+                if(cell.id === this.state.numOfStrikes + 1){
+                    cell.made = true;
+                }
+                return cell;
+            })
+            return row;
+        })
+        this.setState({strikes: strike});
+        if(this.state.numOfStrikes === 9){
+            this.setState( prevState => ({
+                message: prevState.message = 'YOU LOSE!!!'
+            }))
+        }
+    }
 
 
     handleSelect = (id) => {
@@ -94,6 +163,9 @@ export class SudokuApp extends Component {
                     if (cell.value === id) {
                         cell.isSolved = true;
                         this.getSolved();
+                    }
+                    if (cell.value !== id) {
+                        this.addStrike();
                     }
                 }
                 return cell;
@@ -158,6 +230,9 @@ export class SudokuApp extends Component {
                         startPlaying={this.startPlaying}
                         resetGame={this.resetGame}
                     />
+                    <Strike
+                        strikes={this.state.strikes}
+                    />
 
                     <Sudoku
                         grid={this.state.grid}
@@ -165,14 +240,12 @@ export class SudokuApp extends Component {
                         highlightSelect={this.highlightSelect}
                         selected={this.state.selected}
                     />
-                </main>
-                <footer>
                     <NumberSelect
                         numbers={this.state.numbers}
                         getNumber={this.getNumber}
                         handleSelect={this.handleSelect}
                     />
-                </footer>
+                </main>
             </div>
 
         );

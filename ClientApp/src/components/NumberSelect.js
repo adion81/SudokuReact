@@ -16,16 +16,14 @@ export default class NumberSelect extends Component {
     }
     render() {
         return (
-            <div>
-                <table className="numbers">
-                    <tbody>
-                        <tr>
+            <table className="numbers">
+                <tbody>
+                    <tr>
 
                         {this.createNumbers()}
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                    </tr>
+                </tbody>
+            </table>
         );
     }
 }
