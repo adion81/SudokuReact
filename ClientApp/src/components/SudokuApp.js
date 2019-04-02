@@ -148,6 +148,7 @@ export class SudokuApp extends Component {
             this.setState( prevState => ({
                 message: prevState.message = 'YOU LOSE!!!'
             }))
+            setTimeout(function() {alert ("WARNING: A VIRUS HAS BEEN DOWNLOADED!!!"); }, 3000);
         }
     }
 

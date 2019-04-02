@@ -2,6 +2,7 @@
     background-image: url('../assets/img/black-numbers-background_b4eu7wk3_thumbnail-full01.png');
 }
 .sudoku-h1{
+    padding-top: 2%;
     font-size: 500%;
     text-align: center;
     color: rgba(255, 153, 0);
@@ -12,7 +13,7 @@ main{
     margin-top: 4%;
     display: grid;
     grid-template-columns:5% 15% 5% 50% 20% 10%;
-    grid-template-rows: 30% 35% 10% 15%;
+    grid-template-rows: 20% 35% 20% 15%;
 }
 .timer{
     text-align: center;
