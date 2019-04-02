@@ -10,10 +10,10 @@ export class SudokuApp extends Component {
     constructor(props) {
         super(props)
 
-        fetch('api/SudokuController/sudoku/board')
-            .then(response => response.text())
+        fetch('http://localhost:5000/api/sudoku/board')
+            .then(response => response.json())
             .then(data => {
-                console.log(data);
+                console.log(data.grid);
             });
 
         this.state = {
@@ -733,6 +733,7 @@ export class SudokuApp extends Component {
                 ]
             ]
         };
+        
 
         this.baseState = this.state;
 
@@ -762,6 +763,8 @@ export class SudokuApp extends Component {
         this.setState({ grid: square });
 
     }
+
+
     highlightSelect = (row, column, box, id) => {
         if (this.state.isPlaying === true) {
             console.log("Row: " + row + ", Column: " + column + ", Box: " + box);
